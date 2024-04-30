@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from "react";
+import DataTable from "./components/DataTable/DataTable";
+import Modal from "./components/Modal/Modal";
 
-function App() {
+const App = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState(null);
+
+  const handleRowClick = (params) => {
+    setSelectedRowData(params.row);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Material-UI Table</h1>
+      <DataTable onRowClick={handleRowClick} />
+      <Modal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        rowData={selectedRowData}
+      />
     </div>
   );
-}
+};
 
 export default App;
